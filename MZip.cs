@@ -22,9 +22,28 @@ namespace MZip
                 Name = name.Split('\\').Last();
                 FullName = name;
             }
+            internal Entry(string name, string path)
+            {
+                using (var sf = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    new MZip().Copy(sf, Open);
+                Name = name.Split('\\').Last();
+                FullName = name;
+            }
             internal Stream Open;
             internal string Name;
             internal string FullName;
+        }
+        internal void AddEntry(string name, string path)
+        {
+            entries.Add(new Entry(name, path));
+        }
+        internal void AddEntry(string name)
+        {
+            entries.Add(new Entry(name));
+        }
+        internal void AddEntry(string name, Stream stream)
+        {
+            entries.Add(new Entry(name, stream));
         }
         internal void Build(string path)
         {

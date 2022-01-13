@@ -16,7 +16,7 @@ namespace MZip
             }
             internal Entry(string name, Stream stream)
             {
-                new Entry(stream);
+                new Entry(stream, name);
             }
             internal Entry(string name, string path)
             {

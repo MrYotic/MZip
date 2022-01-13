@@ -12,24 +12,22 @@ namespace MZip
         {
             internal Entry(string name)
             {
-                Open = new MemoryStream();
-                Name = name.Split('\\').Last();
-                FullName = name;
+                new Entry(new MemoryStream(), name);
             }
             internal Entry(string name, Stream stream)
             {
-                Open = new MemoryStream();
-                new MZip().Copy(stream, Open);
-                Name = name.Split('\\').Last();
-                FullName = name;
+                new Entry(stream);
             }
             internal Entry(string name, string path)
             {
-                Open = new MemoryStream();
                 using (var sf = new FileStream(path, FileMode.Open, FileAccess.Read))
-                    new MZip().Copy(sf, Open);
-                Name = name.Split('\\').Last();
-                FullName = name;
+                    new Entry(sf, name);
+            }
+            private Entry(Stream open, string path)
+            {
+               Open = open;
+               Name = path.Split('//').Last();
+               FullName = path;
             }
             internal Stream Open;
             internal string Name;

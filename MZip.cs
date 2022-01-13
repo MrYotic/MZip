@@ -45,14 +45,21 @@ namespace MZip
         {
             entries.Add(new Entry(name, stream));
         }
+        internal List<Entry> Sum(List<Entry> var1, List<Entry> var2)
+        {
+            if(var1.Count() <= var2.Count()) var2.AddRange(var1);
+            else var1.AddRange(var2);
+        }
+        internal void AddRangeEntry(List<Entry> entries)
+        {
+           this.entries.AddRange(entries);
+        }
         internal void Build(string path)
         {
             using (var memoryStream = new MemoryStream())
             {
                 using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-                {
                     init(archive);
-                }
                 using (var fileStream = new FileStream(path, FileMode.Create))
                     Copy(memoryStream, fileStream);
             }
@@ -62,9 +69,7 @@ namespace MZip
             using (var memoryStream = new MemoryStream())
             {
                 using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-                {
                     init(archive);
-                }
                 Copy(memoryStream, zip);
             }
         }

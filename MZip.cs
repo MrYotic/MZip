@@ -18,12 +18,14 @@ namespace MZip
             }
             internal Entry(string name, Stream stream)
             {
+                Open = new MemoryStream();
                 new MZip().Copy(stream, Open);
                 Name = name.Split('\\').Last();
                 FullName = name;
             }
             internal Entry(string name, string path)
             {
+                Open = new MemoryStream();
                 using (var sf = new FileStream(path, FileMode.Open, FileAccess.Read))
                     new MZip().Copy(sf, Open);
                 Name = name.Split('\\').Last();

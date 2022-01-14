@@ -10,14 +10,8 @@ namespace MZip
         internal List<Entry> entries = new List<Entry>();
         internal class Entry
         {
-            internal Entry(string name)
-            {
-                new Entry(new MemoryStream(), name);
-            }
-            internal Entry(string name, Stream stream)
-            {
-                new Entry(stream, name);
-            }
+            internal Entry(string name) => new Entry(new MemoryStream(), name);
+            internal Entry(string name, Stream stream) => new Entry(stream, name);
             internal Entry(string name, string path)
             {
                 using (var sf = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -30,30 +24,17 @@ namespace MZip
                FullName = path;
             }
             internal Stream Open;
-            internal string Name;
-            internal string FullName;
+            internal string Name, FullName;
         }
-        internal void AddEntry(string name, string path)
-        {
-            entries.Add(new Entry(name, path));
-        }
-        internal void AddEntry(string name)
-        {
-            entries.Add(new Entry(name));
-        }
-        internal void AddEntry(string name, Stream stream)
-        {
-            entries.Add(new Entry(name, stream));
-        }
+        internal void AddEntry(string name, string path) => entries.Add(new Entry(name, path));
+        internal void AddEntry(string name) => entries.Add(new Entry(name));
+        internal void AddEntry(string name, Stream stream) => entries.Add(new Entry(name, stream));
         internal List<Entry> Sum(List<Entry> var1, List<Entry> var2)
         {
             if(var1.Count() <= var2.Count()) var2.AddRange(var1);
             else var1.AddRange(var2);
         }
-        internal void AddRangeEntry(List<Entry> entries)
-        {
-           this.entries.AddRange(entries);
-        }
+        internal void AddRangeEntry(List<Entry> entries) => this.entries.AddRange(entries);
         internal void Build(string path)
         {
             using (var memoryStream = new MemoryStream())

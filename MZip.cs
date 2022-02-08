@@ -10,8 +10,8 @@ namespace MZip
         internal List<Entry> entries = new List<Entry>();
         internal class Entry
         {
-            internal Entry(string name) => new Entry(new MemoryStream(), name);
-            internal Entry(string name, Stream stream) => new Entry(stream, name);
+            internal Entry(string name) : this(new MemoryStream(), name){ }
+            internal Entry(string name, Stream stream) : this(stream, name){ }
             internal Entry(string name, string path)
             {
                 using (var sf = new FileStream(path, FileMode.Open, FileAccess.Read))
